@@ -32,5 +32,7 @@
     <string>We need to take a picture</string>
     <key>NSCameraUsageDescription</key>
     <string>We need to take a picture</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location</string>
 </dict>
 </plist>
