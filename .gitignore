@@ -44,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 #added by me
-/lib/helpers/config.dart
+/lib/config.dart

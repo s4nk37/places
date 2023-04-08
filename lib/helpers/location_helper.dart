@@ -1,4 +1,4 @@
-import 'config.dart';
+import '../config.dart';
 // add your api key in config.dart
 
 class LocationHelper {
