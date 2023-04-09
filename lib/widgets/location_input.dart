@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:places/screens/map_screen.dart';
 import '../helpers/location_helper.dart';
 
 class LocationInput extends StatefulWidget {
@@ -59,7 +60,10 @@ class _LocationInputState extends State<LocationInput> {
               label: const Text("Current Location"),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                // Navigator.push(
+                //     context, MaterialPageRoute(builder: (_) => MapPage()));
+              },
               icon: const Icon(Icons.map),
               label: const Text("Select on Map"),
             ),
