@@ -61,8 +61,8 @@ class _LocationInputState extends State<LocationInput> {
             ),
             TextButton.icon(
               onPressed: () {
-                // Navigator.push(
-                //     context, MaterialPageRoute(builder: (_) => MapPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const MapScreen()));
               },
               icon: const Icon(Icons.map),
               label: const Text("Select on Map"),
