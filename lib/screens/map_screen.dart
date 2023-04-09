@@ -21,13 +21,28 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   LatLng? markedLocation;
-  bool isMarked = false;
+
+  @override
+  void initState() {
+    markedLocation = LatLng(
+        widget.initialLocation.latitude, widget.initialLocation.longitude);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Choose Location"),
+        actions: [
+          IconButton(
+              onPressed: markedLocation == null
+                  ? null
+                  : () {
+                      Navigator.pop(context, markedLocation as LatLng);
+                    },
+              icon: const Icon(Icons.check))
+        ],
       ),
       body: FlutterMap(
         options: MapOptions(
@@ -39,7 +54,6 @@ class _MapScreenState extends State<MapScreen> {
               : (tapPosition, markedData) {
                   setState(() {
                     markedLocation = markedData;
-                    isMarked = true;
                   });
                 },
         ),
@@ -61,7 +75,7 @@ class _MapScreenState extends State<MapScreen> {
                 'https://maps.geoapify.com/v1/tile/dark-matter-yellow-roads/{z}/{x}/{y}.png?apiKey=$API_KEY',
             userAgentPackageName: 'com.example.app',
           ),
-          if (isMarked)
+          if (widget.isSelecting)
             MarkerLayer(
               markers: [
                 Marker(

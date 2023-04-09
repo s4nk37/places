@@ -17,10 +17,6 @@ class _LocationInputState extends State<LocationInput> {
     final locData = await Location().getLocation();
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
         latitude: locData.latitude!, longitude: locData.longitude!);
-    // print(locData.latitude);
-    // print(locData.longitude);
-    // print(locData.accuracy);
-    // print(staticMapImageUrl);
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
@@ -38,6 +34,12 @@ class _LocationInputState extends State<LocationInput> {
     if (selectedLocation == null) {
       return;
     }
+    final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude!);
+    setState(() {
+      _previewImageUrl = staticMapImageUrl;
+    });
   }
 
   @override
