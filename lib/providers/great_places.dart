@@ -11,20 +11,22 @@ class GreatPlaces with ChangeNotifier {
   }
 
   void addPlace(
-    String pickedTitle,
-    File pickedImage,
-  ) {
+      String pickedTitle, File pickedImage, PlaceLocation pickedLocation) {
     final newPlace = Place(
-        id: DateTime.now().toString(),
-        title: pickedTitle,
-        location: null,
-        image: pickedImage);
+      id: DateTime.now().toString(),
+      title: pickedTitle,
+      location: pickedLocation,
+      image: pickedImage,
+    );
     _items.add(newPlace);
     notifyListeners();
     DBHelper.insert('user_places', {
       'id': newPlace.id,
       'title': newPlace.title,
-      'image': newPlace.image.path
+      'image': newPlace.image.path,
+      'loc_lat': newPlace.location!.latitude,
+      'loc_lng': newPlace.location!.longitude,
+      'address': newPlace.location!.address!,
     });
   }
 
@@ -33,10 +35,14 @@ class GreatPlaces with ChangeNotifier {
     _items = dataList
         .map(
           (item) => Place(
-              id: item['id'],
-              title: item['title'],
-              location: null,
-              image: File(item['image'])),
+            id: item['id'],
+            title: item['title'],
+            location: PlaceLocation(
+                latitude: item['loc_lat'],
+                longitude: item['loc_lng'],
+                address: item['address']),
+            image: File(item['image']),
+          ),
         )
         .toList();
     notifyListeners();

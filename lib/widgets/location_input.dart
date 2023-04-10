@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import '../screens/map_screen.dart';
 import '../helpers/location_helper.dart';
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({Key? key}) : super(key: key);
+  final Function onSelectPlace;
+
+  const LocationInput({Key? key, required this.onSelectPlace})
+      : super(key: key);
 
   @override
   State<LocationInput> createState() => _LocationInputState();
@@ -20,10 +24,13 @@ class _LocationInputState extends State<LocationInput> {
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
+    widget.onSelectPlace(locData.latitude!, locData.longitude!);
+    LocationHelper.getPlaceAddress(
+        lat: locData.latitude!, lng: locData.longitude!);
   }
 
   Future<void> _selectOnMap() async {
-    final selectedLocation = await Navigator.of(context).push(
+    final LatLng selectedLocation = await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => const MapScreen(
@@ -36,10 +43,11 @@ class _LocationInputState extends State<LocationInput> {
     }
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
         latitude: selectedLocation.latitude,
-        longitude: selectedLocation.longitude!);
+        longitude: selectedLocation.longitude);
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
+    widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
@@ -61,7 +69,7 @@ class _LocationInputState extends State<LocationInput> {
                 )
               : Image.network(
                   _previewImageUrl!,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
         ),
         const SizedBox(
