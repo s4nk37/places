@@ -47,8 +47,7 @@ class PlacesListScreen extends StatelessWidget {
                                   MaterialPageRoute(
                                     builder: (ctx) => PlaceDetailScreen(
                                       title: greatPlaces.items[i].title,
-                                      address: greatPlaces
-                                          .items[i].location!.address!,
+                                      location: greatPlaces.items[i].location!,
                                       file: greatPlaces.items[i].image,
                                     ),
                                   ),

@@ -33,15 +33,19 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Choose Location"),
+        title: widget.isSelecting
+            ? const Text("Choose Location")
+            : const Text("Picture Location"),
         actions: [
-          IconButton(
-              onPressed: markedLocation == null
-                  ? null
-                  : () {
-                      Navigator.pop(context, markedLocation as LatLng);
-                    },
-              icon: const Icon(Icons.check))
+          if (widget.isSelecting)
+            IconButton(
+                onPressed:
+                    (markedLocation == null || widget.isSelecting == false)
+                        ? null
+                        : () {
+                            Navigator.pop(context, markedLocation as LatLng);
+                          },
+                icon: const Icon(Icons.check))
         ],
       ),
       body: FlutterMap(
@@ -75,21 +79,21 @@ class _MapScreenState extends State<MapScreen> {
                 'https://maps.geoapify.com/v1/tile/dark-matter-yellow-roads/{z}/{x}/{y}.png?apiKey=$API_KEY',
             userAgentPackageName: 'com.example.app',
           ),
-          if (widget.isSelecting)
-            MarkerLayer(
-              markers: [
-                Marker(
-                  point: markedLocation!,
-                  width: 50,
-                  height: 50,
-                  builder: (context) => const Icon(
-                    Icons.location_on,
-                    color: Colors.redAccent,
-                    size: 30,
-                  ),
+          // if (widget.isSelecting)
+          MarkerLayer(
+            markers: [
+              Marker(
+                point: markedLocation!,
+                width: 50,
+                height: 50,
+                builder: (context) => const Icon(
+                  Icons.location_on,
+                  color: Colors.redAccent,
+                  size: 30,
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
         ],
       ),
     );

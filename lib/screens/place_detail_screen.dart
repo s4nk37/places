@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:places/models/place.dart';
 import 'dart:io';
+
+import 'package:places/screens/map_screen.dart';
 
 class PlaceDetailScreen extends StatelessWidget {
   final File file;
   final String title;
-  final String address;
+  final PlaceLocation location;
 
   const PlaceDetailScreen(
       {Key? key,
       required this.file,
       required this.title,
-      required this.address})
+      required this.location})
       : super(key: key);
 
   @override
@@ -22,6 +25,7 @@ class PlaceDetailScreen extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Hero(
               tag: file,
@@ -65,13 +69,25 @@ class PlaceDetailScreen extends StatelessWidget {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(20),
               child: Text(
-                address,
+                location.address!,
                 style: const TextStyle(
                   fontSize: 20,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => MapScreen(
+                            isSelecting: false,
+                            initialLocation: location,
+                          )));
+                },
+                child: const Text("View on Map")),
           ],
         ),
       ),
