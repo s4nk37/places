@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/providers/great_places.dart';
+import '../widgets/battery_level.dart';
 import 'place_detail_screen.dart';
 import 'add_place_screen.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ class PlacesListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Your Places"),
         actions: [
+          const BatteryLevel(),
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, AddPlaceScreen.routeName);
